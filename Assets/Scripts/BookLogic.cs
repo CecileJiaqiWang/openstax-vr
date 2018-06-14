@@ -1,4 +1,4 @@
-﻿﻿// Creates a system for viewing a set of images all grouped under one parent gameObject
+﻿// Creates a system for viewing a set of images all grouped under one parent gameObject
 // Create two button (forward, backward) and attached them to the parent gameObject 
 
 using System;
@@ -30,7 +30,7 @@ public class BookLogic : MonoBehaviour
     }
 
     // Static constructor which would be called once upon initialization.
-    static BookLogic()
+    public BookLogic()
     {
         currentId = 0;
     }
@@ -127,7 +127,7 @@ public class BookLogic : MonoBehaviour
         }
     }
 
-    void UpdatePages()
+    public void UpdatePages()
     {
         // Makes any page other than current invisible and makes current visible
         foreach (Transform child in transform)
@@ -164,15 +164,25 @@ public class BookLogic : MonoBehaviour
     }
 
 
-    //Todo
+    //Todo: Hide other objects.
     void Start()
     {
-        // Sets all children as invsible other than current
-        foreach (Transform child in transform)
+        if (!HideBook)
         {
-            //child is your child transform
-            int index = child.GetSiblingIndex();
-            if (index != CurrentPage)
+            // Sets all children as invsible other than current
+            foreach (Transform child in transform)
+            {
+                // child is your child transform
+                int index = child.GetSiblingIndex();
+                if (index != CurrentPage)
+                {
+                    child.gameObject.SetActive(false);
+                }
+            }
+        }
+        else
+        {
+            foreach (Transform child in transform)
             {
                 child.gameObject.SetActive(false);
             }

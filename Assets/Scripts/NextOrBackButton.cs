@@ -19,10 +19,6 @@ public class NextOrBackButton : MonoBehaviour {
 	// True means next, false means back
 	public bool nextOrBack;
 
-	// Use this for initialization
-	void Start () {
-//		myRenderer = GetComponent<Renderer>();
-	}
 
 	public void SetGazedAt(bool gazedAt) {
 		isLookedAt = gazedAt;
@@ -40,15 +36,12 @@ public class NextOrBackButton : MonoBehaviour {
 			// Gaze time exceeded limit - button is considered clicked.
 			if (lookTimer > timerDuration) {
 				lookTimer = 0f;
-
 				if (nextOrBack == true) {
 					bookLogic.Next();
 				} else {
 					bookLogic.Back();
 				}
 			}
-		} else {
-			lookTimer = 0f;
 		}
 
 	}
