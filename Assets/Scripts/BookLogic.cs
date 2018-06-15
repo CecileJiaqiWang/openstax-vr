@@ -1,25 +1,26 @@
-﻿// Creates a system for viewing a set of images all grouped under one parent gameObject
+﻿﻿// Creates a system for viewing a set of images all grouped under one parent gameObject
 // Create two button (forward, backward) and attached them to the parent gameObject 
 
 using System;
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class BookLogic : MonoBehaviour
 {
-    [SerializeField] public int TargetPage = 0;
-    [SerializeField] public int CurrentPage = 0;
-    [SerializeField] public int Progress = 0;
-    [SerializeField] public bool AutoSave = true;
-    [SerializeField] public bool HideBook = false;
 
     // Properties.
-    private static int currentId;
+    private int CurrentPage { get; set; }
+    private int Progress { get; set; }
     private int Id { get; set; }
     private string Title { get; set; }
     private string Tag { get; set; }
     private DateTime LastOpenDate { get; set; }
+    
+    private static int _currentId;
+    public bool AutoSave = true;
+    public bool HideBook = false;
 
     // Instance Constructor.
     public BookLogic(string title, string tag)
@@ -29,20 +30,15 @@ public class BookLogic : MonoBehaviour
         this.Tag = tag;
     }
 
-    // Static constructor which would be called once upon initialization.
-    public BookLogic()
+    // Dummy Contructor.
+    private BookLogic()
     {
-        currentId = 0;
-    }
-
-    private void CurrentId()
-    {
-        currentId = 0;
+        _currentId = 0;
     }
 
     private int GetNextId()
     {
-        return ++currentId;
+        return ++_currentId;
     }
 
     /**
@@ -87,10 +83,10 @@ public class BookLogic : MonoBehaviour
         UpdatePages();
     }
 
-    public void GoTo()
+    public void GoTo(int pageNum)
     {
         // Given an input desired page number in unity, goes to that specific page
-        CurrentPage = TargetPage;
+        CurrentPage = pageNum;
 
         // Save progress if in autosave mode.
         if (AutoSave)
@@ -136,6 +132,7 @@ public class BookLogic : MonoBehaviour
             if (index != CurrentPage)
             {
                 child.gameObject.SetActive(false);
+                
             }
             else
             {
@@ -174,11 +171,12 @@ public class BookLogic : MonoBehaviour
             {
                 // child is your child transform
                 int index = child.GetSiblingIndex();
-                if (index != CurrentPage)
+                if (index != Progress)
                 {
                     child.gameObject.SetActive(false);
                 }
             }
+            
         }
         else
         {
@@ -186,6 +184,7 @@ public class BookLogic : MonoBehaviour
             {
                 child.gameObject.SetActive(false);
             }
+
         }
     }
 }

@@ -15,7 +15,7 @@ public class BookMarkButton : MonoBehaviour {
     private float lookTimer = 0f;
 
     // Links with book logic
-    public BookLogic bookLogic;
+    public BookLogic Book;
 
     public void SetGazedAt(bool gazedAt) {
         isLookedAt = gazedAt;
@@ -34,11 +34,42 @@ public class BookMarkButton : MonoBehaviour {
             if (lookTimer > timerDuration)
             {
                 lookTimer = 0;
-                bookLogic.SaveProgress();
+                Book.SaveProgress();
                 Debug.Log("Saved!");
             }
         } 
 
+    }
+    
+    public void Hide()
+    {
+        if (Book.HideBook)
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(true);
+            }
+            
+        }
+    }
+    
+    void Start()
+    {
+        if (Book.HideBook)
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(false);
+				
+            }
+        }
     }
 		
 }

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -14,17 +14,19 @@ public class NextOrBackButton : MonoBehaviour {
 	private float lookTimer = 0f;
 
 	// Links with book logic
-	public BookLogic bookLogic;
+	public BookLogic Book;
 
 	// True means next, false means back
 	public bool nextOrBack;
-
 
 	public void SetGazedAt(bool gazedAt) {
 		isLookedAt = gazedAt;
 	}
 
+
 	void Update () {
+		
+		
 		// While player is looking at this button.
 		if (isLookedAt) {
 
@@ -37,13 +39,48 @@ public class NextOrBackButton : MonoBehaviour {
 			if (lookTimer > timerDuration) {
 				lookTimer = 0f;
 				if (nextOrBack == true) {
-					bookLogic.Next();
+					Book.Next();
 				} else {
-					bookLogic.Back();
+					Book.Back();
 				}
 			}
+		} else {
+			lookTimer = 0f;
 		}
 
 	}
-		
+
+	public void Hide()
+	{
+		if (Book.HideBook)
+		{
+			foreach (Transform child in transform)
+			{
+				child.gameObject.SetActive(false);
+			}
+		}
+		else
+		{
+			foreach (Transform child in transform)
+			{
+				child.gameObject.SetActive(true);
+			}
+            
+		}
+	}
+
+	void Start()
+	{
+		if (Book.HideBook)
+		{
+			foreach (Transform child in transform)
+			{
+				child.gameObject.SetActive(false);
+				
+			}
+		}
+	}
+
+
+
 }
