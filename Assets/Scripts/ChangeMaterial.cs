@@ -3,22 +3,22 @@
 [RequireComponent(typeof(Collider))]
 public class ChangeMaterial : MonoBehaviour
 {
-    private Renderer myRenderer;
+    private Renderer _myRenderer;
 
-    public Material inactiveMaterial;
-    public Material gazedAtMaterial;
+    public Material InactiveMaterial;
+    public Material GazedAtMaterial;
 
     void Start()
     {
-        myRenderer = GetComponent<Renderer>();
+        _myRenderer = GetComponent<Renderer>();
         SetGazedAt(false);
     }
 
     public void SetGazedAt(bool gazedAt)
     {
-        if (inactiveMaterial != null && gazedAtMaterial != null)
+        if (InactiveMaterial != null && GazedAtMaterial != null)
         {
-            myRenderer.material = gazedAt ? gazedAtMaterial : inactiveMaterial;
+            _myRenderer.material = gazedAt ? GazedAtMaterial : InactiveMaterial;
         }
     }
 }

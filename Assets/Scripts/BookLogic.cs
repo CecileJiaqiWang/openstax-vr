@@ -1,15 +1,12 @@
-﻿﻿// Creates a system for viewing a set of images all grouped under one parent gameObject
+﻿// Creates a system for viewing a set of images all grouped under one parent gameObject
 // Create two button (forward, backward) and attached them to the parent gameObject 
 
 using System;
-using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+
 
 public class BookLogic : MonoBehaviour
 {
-
     // Properties.
     private int CurrentPage { get; set; }
     private int Progress { get; set; }
@@ -17,7 +14,7 @@ public class BookLogic : MonoBehaviour
     private string Title { get; set; }
     private string Tag { get; set; }
     private DateTime LastOpenDate { get; set; }
-    
+
     private static int _currentId;
     public bool AutoSave = true;
     public bool HideBook = false;
@@ -30,7 +27,7 @@ public class BookLogic : MonoBehaviour
         this.Tag = tag;
     }
 
-    // Dummy Contructor.
+    // Dummy Constructor.
     private BookLogic()
     {
         _currentId = 0;
@@ -42,7 +39,7 @@ public class BookLogic : MonoBehaviour
     }
 
     /**
-     * Get total number of pages.
+     * Gets the total number of pages.
      */
     private int TotalPageCount()
     {
@@ -50,14 +47,14 @@ public class BookLogic : MonoBehaviour
     }
 
     /**
-     * Display the next page.
+     * Displays the next page.
      */
     public void Next()
     {
         // Updates the current page by moving forward one page
         CurrentPage = TotalPageCount() > CurrentPage + 1 ? CurrentPage + 1 : 0;
 
-        // Save progress if in autosave mode.
+        // Saves progress if in autosave mode.
         if (AutoSave)
         {
             SaveProgress();
@@ -67,14 +64,14 @@ public class BookLogic : MonoBehaviour
     }
 
     /**
-     * Display the previous page.
+     * Displays the previous page.
      */
     public void Back()
     {
         // Updates the current page by moving back one page
         CurrentPage = CurrentPage > 0 ? CurrentPage - 1 : TotalPageCount() - 1;
 
-        // Save progress if in autosave mode.
+        // Saves progress if in autosave mode.
         if (AutoSave)
         {
             SaveProgress();
@@ -88,7 +85,7 @@ public class BookLogic : MonoBehaviour
         // Given an input desired page number in unity, goes to that specific page
         CurrentPage = pageNum;
 
-        // Save progress if in autosave mode.
+        // Saves progress if in autosave mode.
         if (AutoSave)
         {
             SaveProgress();
@@ -98,7 +95,7 @@ public class BookLogic : MonoBehaviour
     }
 
     /**
-     * Erase progress.
+     * Erases progress.
      */
     public void EraseProgress()
     {
@@ -106,6 +103,10 @@ public class BookLogic : MonoBehaviour
         CurrentPage = 0;
         UpdatePages();
     }
+
+    /*
+     * Hides / displays the book.
+     */
 
     public void Hide()
     {
@@ -132,7 +133,6 @@ public class BookLogic : MonoBehaviour
             if (index != CurrentPage)
             {
                 child.gameObject.SetActive(false);
-                
             }
             else
             {
@@ -145,15 +145,16 @@ public class BookLogic : MonoBehaviour
     /**
      * Save progress.
      */
-    //ToDO
+    //ToDo
     public void SaveProgress()
     {
         Progress = CurrentPage;
     }
 
     /*
-     * Enable / disable autosave.
+     * Enables / disables autosave.
      */
+    //ToDO
     public void ToggleAutoSave()
     {
         AutoSave = !AutoSave;
@@ -161,7 +162,6 @@ public class BookLogic : MonoBehaviour
     }
 
 
-    //Todo: Hide other objects.
     void Start()
     {
         if (!HideBook)
@@ -176,7 +176,6 @@ public class BookLogic : MonoBehaviour
                     child.gameObject.SetActive(false);
                 }
             }
-            
         }
         else
         {
@@ -184,7 +183,6 @@ public class BookLogic : MonoBehaviour
             {
                 child.gameObject.SetActive(false);
             }
-
         }
     }
 }

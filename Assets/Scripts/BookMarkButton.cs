@@ -4,43 +4,41 @@ using System.Collections;
 using UnityEditor.SceneManagement;
 
 public class BookMarkButton : MonoBehaviour {
-
-    // Whether the Google Cardboard user is gazing at this button.
-    private bool isLookedAt = false;
-
-    // How long the user can gaze at this before the button is clicked.
-    public float timerDuration = 1f;
-
-    // Count time the player has been gazing at the button.
-    private float lookTimer = 0f;
-
+    
     // Links with book logic
     public BookLogic Book;
+    
+    // How long the user can gaze at this before the button is clicked.
+    public float TimerDuration = 1f;
+
+    // Count time the player has been gazing at the button.
+    private float _lookTimer = 0f;
+    
+    // Whether the Google Cardboard user is gazing at this button.
+    private bool _isLookedAt = false;
 
     public void SetGazedAt(bool gazedAt) {
-        isLookedAt = gazedAt;
+        _isLookedAt = gazedAt;
     }
 
     void Update () {
         // While player is looking at this button.
-        if (isLookedAt) {
-
+        if (_isLookedAt) {
             // Increment the gaze timer.
-            lookTimer += Time.deltaTime;
-
-//			gazeTimer.GetComponent<Renderer>().material.SetFloat("_Cutoff", lookTimer / timerDuration);
-
+            _lookTimer += Time.deltaTime;
             // Gaze time exceeded limit - button is considered clicked.
-            if (lookTimer > timerDuration)
+            if (_lookTimer > TimerDuration)
             {
-                lookTimer = 0;
+                _lookTimer = 0;
                 Book.SaveProgress();
                 Debug.Log("Saved!");
             }
         } 
-
     }
     
+    /*
+     * Hides / displays the button according to the view mode.
+     */
     public void Hide()
     {
         if (Book.HideBook)
