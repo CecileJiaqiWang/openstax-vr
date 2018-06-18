@@ -31,7 +31,7 @@ public class BookMarkButton : MonoBehaviour {
             {
                 _lookTimer = 0;
                 Book.SaveProgress();
-                Debug.Log("Saved!");
+                
             }
         } 
     }
