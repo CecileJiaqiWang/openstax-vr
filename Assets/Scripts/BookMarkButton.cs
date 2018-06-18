@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using UnityEditor.SceneManagement;
+using UnityEngine.AI;
 
 public class BookMarkButton : MonoBehaviour {
     
@@ -29,11 +30,15 @@ public class BookMarkButton : MonoBehaviour {
             // Gaze time exceeded limit - button is considered clicked.
             if (_lookTimer > TimerDuration)
             {
-                _lookTimer = 0;
+                _lookTimer = 0f;
                 Book.SaveProgress();
                 
             }
-        } 
+        }
+        else
+        {
+            _lookTimer = 0f;
+        }
     }
     
     /*
