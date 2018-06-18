@@ -2,6 +2,11 @@
 // Create two button (forward, backward) and attached them to the parent gameObject 
 
 using System;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using UnityEditor;
+using UnityEditor.Experimental.UIElements;
 using UnityEngine;
 
 
@@ -94,6 +99,7 @@ public class BookLogic : MonoBehaviour
         UpdatePages();
     }
 
+    //ToDo
     /**
      * Erases progress.
      */
@@ -145,10 +151,22 @@ public class BookLogic : MonoBehaviour
     /**
      * Save progress.
      */
-    //ToDo
     public void SaveProgress()
     {
         Progress = CurrentPage;
+        string currentDir = Directory.GetCurrentDirectory();
+        string fileName = "envStatus.txt";
+        string fullPath = currentDir + "/" + fileName;
+        string bookStatus = "Progress:" + Progress;
+        try
+        {
+            File.WriteAllText(fullPath, bookStatus);
+            Debug.Log("Saved!");
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Failed to save progress!");
+        }
     }
 
     /*
@@ -158,12 +176,41 @@ public class BookLogic : MonoBehaviour
     public void ToggleAutoSave()
     {
         AutoSave = !AutoSave;
-        Debug.Log("Autosave status: " + AutoSave);
+        Debug.Log("Autosave status:" + AutoSave);
     }
 
 
     void Start()
     {
+        // The path of the txt file to store game status.
+        string currentDir = Directory.GetCurrentDirectory();
+        string fileName = "envStatus.txt";
+        string fullPath = currentDir + "/" + fileName;
+        try
+        {
+            int bookStatus;
+            // Try reading the progress.
+            if (!Int32.TryParse(File.ReadAllText(fullPath).Split(':')[1], out bookStatus))
+            {
+                // Reset everything.
+                Progress = 0;
+                CurrentPage = 0;
+            }
+            else
+            {
+                // Reload game.
+                Progress = bookStatus;
+                CurrentPage = Progress;
+            }
+        }
+        catch (Exception e)
+        {
+            // Create an empty file.
+            File.Create(fullPath);
+            Progress = 0;
+            CurrentPage = 0;
+        }
+        
         if (!HideBook)
         {
             // Sets all children as invsible other than current
