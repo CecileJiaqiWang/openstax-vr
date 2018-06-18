@@ -106,8 +106,19 @@ public class BookLogic : MonoBehaviour
     public void EraseProgress()
     {
         Progress = 0;
-        CurrentPage = 0;
-        UpdatePages();
+        string currentDir = Directory.GetCurrentDirectory();
+        string fileName = "envStatus.txt";
+        string fullPath = currentDir + "/" + fileName;
+        string bookStatus = "Progress:" + Progress;
+        try
+        {
+            File.WriteAllText(fullPath, bookStatus);
+            Debug.Log("Erased progress!");
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Failed to erase progress!");
+        }
     }
 
     /*

@@ -145,6 +145,7 @@
     <Compile Include="Assets\Scripts\BookLogic.cs" />
     <Compile Include="Assets\Scripts\BookMarkButton.cs" />
     <Compile Include="Assets\Scripts\ChangeMaterial.cs" />
+    <Compile Include="Assets\Scripts\EraseProgressButton.cs" />
     <Compile Include="Assets\Scripts\HideButton.cs" />
     <Compile Include="Assets\Scripts\NextOrBackButton.cs" />
     <Compile Include="Assets\Scripts\VR\Utils\GUIArrows.cs" />
