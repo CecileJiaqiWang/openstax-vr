@@ -113,6 +113,8 @@ public class BookLogic : MonoBehaviour
         {
             File.WriteAllText(fullPath, bookStatus);
             Debug.Log("Erased progress!");
+            CurrentPage = Progress;
+            UpdatePages();
         }
         catch (Exception e)
         {
@@ -158,6 +160,7 @@ public class BookLogic : MonoBehaviour
     }
 
 
+    //ToDo: Also need to save the setting status.
     /**
      * Save progress.
      */
