@@ -142,6 +142,7 @@
     <Compile Include="Assets\menu\Scripts\MaterialGradientModifier.cs" />
     <Compile Include="Assets\menu\Scripts\ObjectFocus.cs" />
     <Compile Include="Assets\menu\Scripts\ObjectFocusManager.cs" />
+    <Compile Include="Assets\Scripts\AutoSaveButton.cs" />
     <Compile Include="Assets\Scripts\BookLogic.cs" />
     <Compile Include="Assets\Scripts\BookMarkButton.cs" />
     <Compile Include="Assets\Scripts\ChangeMaterial.cs" />

@@ -17,7 +17,7 @@ public class HideButton : MonoBehaviour
     public NextOrBackButton Back;
     public BookMarkButton BookMark;
     public EraseProgressButton EraseProgress;
-
+    public AutoSaveButton AutoSave;
 
     public void SetGazedAt(bool gazedAt)
     {

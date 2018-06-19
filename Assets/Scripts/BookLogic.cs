@@ -21,7 +21,7 @@ public class BookLogic : MonoBehaviour
     private DateTime LastOpenDate { get; set; }
 
     private static int _currentId;
-    public bool AutoSave = true;
+    private bool AutoSave = true;
     public bool HideBook = false;
 
     // Instance Constructor.
@@ -99,7 +99,6 @@ public class BookLogic : MonoBehaviour
         UpdatePages();
     }
 
-    //ToDo
     /**
      * Erases progress.
      */
@@ -183,13 +182,16 @@ public class BookLogic : MonoBehaviour
     /*
      * Enables / disables autosave.
      */
-    //ToDO
     public void ToggleAutoSave()
     {
         AutoSave = !AutoSave;
+        if (AutoSave)
+        {
+            SaveProgress();
+        }
+
         Debug.Log("Autosave status:" + AutoSave);
     }
-
 
     void Start()
     {
