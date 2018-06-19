@@ -15,8 +15,6 @@ public class HideButton : MonoBehaviour
     public BookLogic Book;
     public NextOrBackButton Next;
     public NextOrBackButton Back;
-    public BookMarkButton BookMark;
-    public EraseProgressButton EraseProgress;
     public AutoSaveButton AutoSave;
 
     public void SetGazedAt(bool gazedAt)
@@ -39,8 +37,6 @@ public class HideButton : MonoBehaviour
                 Book.Hide();
                 Next.Hide();
                 Back.Hide();
-                BookMark.Hide();
-                EraseProgress.Hide();
             }
         }
         else
