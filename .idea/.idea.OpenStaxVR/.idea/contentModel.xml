@@ -197,6 +197,7 @@
           </e>
         </e>
         <e p="scripts" t="Include">
+          <e p="AutoSaveButton.cs" t="Include" />
           <e p="BookLogic.cs" t="Include" />
           <e p="BookMarkButton.cs" t="Include" />
           <e p="ChangeMaterial.cs" t="Include" />

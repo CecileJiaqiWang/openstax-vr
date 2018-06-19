@@ -32,6 +32,7 @@ public class EraseProgressButton : MonoBehaviour
             // Gaze time exceeded limit - button is considered clicked.
             if (_lookTimer > TimerDuration)
             {
+                _lookTimer = 0f;
                 Book.EraseProgress();
             }
         }

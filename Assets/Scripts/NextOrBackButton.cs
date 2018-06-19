@@ -39,6 +39,7 @@ public class NextOrBackButton : MonoBehaviour
                 if (NextOrBack == true)
                 {
                     Book.Next();
+                    Debug.Log("NExt");
                 }
                 else
                 {
