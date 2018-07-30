@@ -13,7 +13,7 @@ public class NextOrBackButton : MonoBehaviour
     private float _lookTimer = 0f;
 
     // Links with book logic
-    public BookLogic Book;
+    public Book Book;
 
     // True means next, false means back
     public bool NextOrBack;
@@ -58,32 +58,21 @@ public class NextOrBackButton : MonoBehaviour
      */
     public void Hide()
     {
-        if (Book.HideBook)
+       
+        foreach (Transform child in transform)
         {
-            foreach (Transform child in transform)
-            {
-                child.gameObject.SetActive(false);
-            }
+            child.gameObject.SetActive(false);
         }
-        else
-        {
-            foreach (Transform child in transform)
-            {
-                child.gameObject.SetActive(true);
-            }
-        }
+      
     }
 
     void Start()
     {
-        if (Book.HideBook)
+       
+        foreach (Transform child in transform)
         {
-            foreach (Transform child in transform)
-            {
-                child.gameObject.SetActive(false);
-            }
+            child.gameObject.SetActive(false);
         }
-
 
     }
 }
