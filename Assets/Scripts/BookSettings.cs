@@ -1,24 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum Buttons{
-    towardPlayer, awayPlayer, rotateTopBook, rotateBotBook,
-	toggleHide
+	towardPlayer, awayPlayer, rotateTopBook, rotateBotBook,
+	toggleHide, toggleMusic
  }
 
 public class BookSettings : MonoBehaviour {
 
-	
 	// Gets the book
 	public GameObject BookInterface;
-	public GameObject book;
+	public Book Book;
 
 	private Boolean _isHiden = false;
-	
 	// The Gameobjects to be activated.
 	private bool[,] recover = new bool[7, 21];
-
+	
 	// Button choices
 	public Buttons current;
 
@@ -35,13 +33,13 @@ public class BookSettings : MonoBehaviour {
 		isLookedAt = gazedAt;
 	}
 
+
 	private void ToggleHide()
 	{
 		_isHiden = !_isHiden;
 		Transform parent = BookInterface.gameObject.transform;
 		if (_isHiden)
 		{
-			// Either hide or deactivate game objects.
 			for (int i = 0; i < parent.childCount; i++)
 			{
 				Transform child = parent.GetChild(i);
@@ -50,7 +48,6 @@ public class BookSettings : MonoBehaviour {
 					Transform grandChild = child.GetChild(j);
 					if (grandChild.gameObject.activeSelf && !grandChild.gameObject.CompareTag("Hide"))
 					{
-						// Do not mute music while hiding the play music button.
 						if (!grandChild.gameObject.CompareTag("Music"))
 						{
 							recover[i, j] = true;
@@ -68,7 +65,6 @@ public class BookSettings : MonoBehaviour {
 		}
 		else
 		{
-			// Recover game objects.
 			parent.GetChild(1).GetChild(5).transform.localScale = new Vector3(1, 1, 1);
 			for (int i = 0; i < parent.childCount; i++)
 			{
@@ -83,7 +79,7 @@ public class BookSettings : MonoBehaviour {
 			}
 		}
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
@@ -99,21 +95,22 @@ public class BookSettings : MonoBehaviour {
 
 				switch (current){
 					case Buttons.towardPlayer: // Moves the book toward the user
-						book.transform.position += new Vector3(-1,0,0);
+						BookInterface.transform.position += new Vector3(-1,0,0);
 						break;
 					case Buttons.awayPlayer: // Moves the book away from the user
-						book.transform.position += new Vector3(1,0,0);
+						BookInterface.transform.position += new Vector3(1,0,0);
 						break;
 					case Buttons.rotateTopBook: // Rotates the top of the book toward the user
-						book.transform.Rotate(-10,0,0);
+						BookInterface.transform.Rotate(-10,0,0);
 						break;
 					case Buttons.rotateBotBook: // Rotates the bottom of the book toward the user
-						book.transform.Rotate(10,0,0);
+						BookInterface.transform.Rotate(10,0,0);
 						break;
 					case Buttons.toggleHide:
 						ToggleHide();
 						break;
-						
+					case Buttons.toggleMusic:
+						break;
 				}
 			}
 		} else {
