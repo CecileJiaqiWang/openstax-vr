@@ -59,20 +59,21 @@ public class Book : MonoBehaviour
         
         // Save progress.
         SaveProgress();
-
+        // Update active page.
         UpdatePages();
     }
 
     /**
      * Displays the previous page.
      */
-    public void Back()
+    public void TurnBackPage()
     {
         _currentPage = PreviousPage(_currentPage);
         
         // Save progress.
         SaveProgress();
 
+        // Update active page.
         UpdatePages();
     }
 
@@ -80,8 +81,10 @@ public class Book : MonoBehaviour
     {
         _currentPage = pageNum;
         
+        // Save progress.
         SaveProgress();
 
+        // Update active page.
         UpdatePages();
     }
 
@@ -103,24 +106,28 @@ public class Book : MonoBehaviour
         }
     }
 
+    
     /**
      * Save progress.
      */
     public void SaveProgress()
     {
         _progress = _currentPage;
-        string currentDir = Directory.GetCurrentDirectory();
-        string fileName = "envStatus.txt";
+        string currentDir = Application.persistentDataPath;        
+        string fileName = _bookChoices + "envStatus.txt";
         string fullPath = currentDir + "/" + fileName;
         string bookStatus = "Progress:" + _progress;
         try
         {
             File.WriteAllText(fullPath, bookStatus);
-            Debug.Log("Saved!");
         }
         catch (Exception e)
         {
-            Debug.Log("Failed to save progress!");
+            // Extract some information from this exception, and then   
+            // throw it to the parent method.  
+            if (e.Source != null)  
+                Console.WriteLine("Exception source: {0}", e.Source);  
+            throw;  
         }
     }
 
