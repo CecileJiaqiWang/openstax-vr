@@ -110,7 +110,7 @@ public class Book : MonoBehaviour
     /**
      * Save progress.
      */
-    public void SaveProgress()
+    private void SaveProgress()
     {
         _progress = _currentPage;
         string currentDir = Application.persistentDataPath;        
@@ -129,6 +129,39 @@ public class Book : MonoBehaviour
                 Console.WriteLine("Exception source: {0}", e.Source);  
             throw;  
         }
+    }
+
+    private void LoadProgress()
+    {
+        // The path of the txt file storing game status.
+        string currentDir = Application.persistentDataPath;
+        string fileName = _bookChoices + "envStatus.txt";
+        string fullPath = currentDir + "/" + fileName;
+        try
+        {
+            int bookStatus;
+            // Try reading the progress.
+            if (!Int32.TryParse(File.ReadAllText(fullPath).Split(':')[1], out bookStatus))
+            {
+                // Reset everything.
+                _progress = 0;
+                _currentPage = 0;
+            }
+            else
+            {
+                // Reload game.
+                _progress = bookStatus;
+                _currentPage = _progress;
+            }
+        }
+        catch (Exception e)
+        {
+            // Create an empty file.
+            File.Create(fullPath).Dispose();
+            _progress = 0;
+            _currentPage = 0;
+        }
+        
     }
 
 
