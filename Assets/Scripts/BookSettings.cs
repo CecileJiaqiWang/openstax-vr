@@ -3,13 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum Buttons{
-    towardPlayer, awayPlayer, rotateTopBook, rotateBotBook
+    towardPlayer, awayPlayer, rotateTopBook, rotateBotBook,
+	toggleHide
  }
 
 public class BookSettings : MonoBehaviour {
 
+	
 	// Gets the book
+	public GameObject BookInterface;
 	public GameObject book;
+
+	private Boolean _isHiden = false;
+	
+	// The Gameobjects to be activated.
+	private bool[,] recover = new bool[7, 21];
 
 	// Button choices
 	public Buttons current;
@@ -25,6 +33,43 @@ public class BookSettings : MonoBehaviour {
 
 	public void SetGazedAt(bool gazedAt) {
 		isLookedAt = gazedAt;
+	}
+
+	private void ToggleHide()
+	{
+		_isHiden = !_isHiden;
+		Transform parent = BookInterface.gameObject.transform;
+		if (_isHiden)
+		{
+			// Hide or deactivate game objects.
+			for (int i = 0; i < parent.childCount; i++)
+			{
+				Transform child = parent.GetChild(i);
+				for (int j = 0; j < child.childCount; j++)
+				{
+					Transform grandChild = child.GetChild(j);
+					grandChild.gameObject.SetActive(false);
+				}								
+			}
+
+		}
+		else
+		{
+			// Recover game objects.
+			parent.GetChild(1).GetChild(5).transform.localScale = new Vector3(1, 1, 1);
+			for (int i = 0; i < parent.childCount; i++)
+			{
+				for (int j = 0; j < parent.GetChild(i).childCount; j++)
+				{
+					if (recover[i, j] == true)
+					{
+						parent.GetChild(i).GetChild(j).gameObject.SetActive(true);
+						recover[i, j] = false;
+					}
+				}
+			}
+		}
+		
 	}
 	
 	// Update is called once per frame
@@ -53,6 +98,10 @@ public class BookSettings : MonoBehaviour {
 					case Buttons.rotateBotBook: // Rotates the bottom of the book toward the user
 						book.transform.Rotate(10,0,0);
 						break;
+					case Buttons.toggleHide:
+						ToggleHide();
+						break;
+						
 				}
 			}
 		} else {
