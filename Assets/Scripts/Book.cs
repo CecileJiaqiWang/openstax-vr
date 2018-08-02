@@ -26,17 +26,38 @@ public class Book : MonoBehaviour
      */
     private int TotalPageCount()
     {
-        return transform.childCount;
+        int totalPage = 4;
+        return totalPage;
+    }
+    
+    /**
+     * Update current page to one forward.
+     */
+    private int NextPage(int currentPage)
+    {
+        return currentPage == TotalPageCount() - 1 
+            ? 0 
+            : currentPage + 1;
+    }
+
+    /**
+     * Update current page to one backward.
+     */
+    private int PreviousPage(int currentPage)
+    {
+        return currentPage == 0
+            ? TotalPageCount() - 1
+            : currentPage - 1;
     }
 
     /**
      * Displays the next page.
      */
-    public void Next()
+    public void TurnNextPage()
     {
-        // Updates the current page by moving forward one page
-        _currentPage = TotalPageCount() > _currentPage + 1 ? _currentPage + 1 : 0;
-
+        _currentPage = NextPage(_currentPage);
+        
+        // Save progress.
         SaveProgress();
 
         UpdatePages();
@@ -47,17 +68,16 @@ public class Book : MonoBehaviour
      */
     public void Back()
     {
-        // Updates the current page by moving back one page
-        _currentPage = _currentPage > 0 ? _currentPage - 1 : TotalPageCount() - 1;
-
+        _currentPage = PreviousPage(_currentPage);
+        
+        // Save progress.
         SaveProgress();
 
         UpdatePages();
     }
 
-    public void GoTo(int pageNum)
+    public void GoToPage(int pageNum)
     {
-        // Given an input desired page number in unity, goes to that specific page
         _currentPage = pageNum;
         
         SaveProgress();
@@ -65,28 +85,6 @@ public class Book : MonoBehaviour
         UpdatePages();
     }
 
-    /**
-     * Erases progress.
-     */
-    public void EraseProgress()
-    {
-        _progress = 0;
-        string currentDir = Directory.GetCurrentDirectory();
-        string fileName = "envStatus.txt";
-        string fullPath = currentDir + "/" + fileName;
-        string bookStatus = "Progress:" + _progress;
-        try
-        {
-            File.WriteAllText(fullPath, bookStatus);
-            Debug.Log("Erased progress!");
-            _currentPage = _progress;
-            UpdatePages();
-        }
-        catch (Exception e)
-        {
-            Debug.Log("Failed to erase progress!");
-        }
-    }
 
     public void UpdatePages()
     {
