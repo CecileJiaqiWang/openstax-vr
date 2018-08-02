@@ -41,15 +41,28 @@ public class BookSettings : MonoBehaviour {
 		Transform parent = BookInterface.gameObject.transform;
 		if (_isHiden)
 		{
-			// Hide or deactivate game objects.
+			// Either hide or deactivate game objects.
 			for (int i = 0; i < parent.childCount; i++)
 			{
 				Transform child = parent.GetChild(i);
 				for (int j = 0; j < child.childCount; j++)
 				{
 					Transform grandChild = child.GetChild(j);
-					grandChild.gameObject.SetActive(false);
-				}								
+					if (grandChild.gameObject.activeSelf && !grandChild.gameObject.CompareTag("Hide"))
+					{
+						// Do not mute music while hiding the play music button.
+						if (!grandChild.gameObject.CompareTag("Music"))
+						{
+							recover[i, j] = true;
+							grandChild.gameObject.SetActive(false);
+						}
+						else
+						{
+							grandChild.gameObject.transform.localScale = new Vector3(0, 0, 0);
+						}
+					}
+				}
+								
 			}
 
 		}
@@ -69,7 +82,6 @@ public class BookSettings : MonoBehaviour {
 				}
 			}
 		}
-		
 	}
 	
 	// Update is called once per frame
