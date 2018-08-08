@@ -57,6 +57,21 @@ public class TurnPageButton : MonoBehaviour
                       }
 
                         break;
+                    case NextBack.goToPage:
+                        book.GoToPage(goToPage);
+                        book.IsTable = false;
+                        int currentIdx = transform.parent.GetSiblingIndex();
+                        GameObject toC = transform.parent.parent.parent.GetChild(0).gameObject;
+                        foreach (Transform child in toC.transform)
+                        {
+                            if (!child.Equals(toC.transform.GetChild(currentIdx)))
+                            {
+                                child.gameObject.SetActive(false);
+                            }
+                        }
+                        GameObject background = transform.parent.parent.parent.GetChild(2).gameObject;
+                        background.SetActive(false);   
+                        break;
                     
                 }
             }
