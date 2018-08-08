@@ -1,9 +1,17 @@
 ﻿using UnityEngine;
 
+public enum NextBack{
+    next, back, goToPage
+ }
 
-public class NextOrBackButton : MonoBehaviour
+public class TurnPageButton : MonoBehaviour
 {
-    // Whether the Google Cardboard user is gazing at this button.
+
+	public NextBack dropdown;
+
+    public int goToPage;
+
+	// Whether the Google Cardboard user is gazing at this button.
     private bool _isLookedAt = false;
 
     // How long the user can gaze at this before the button is clicked.
@@ -11,12 +19,8 @@ public class NextOrBackButton : MonoBehaviour
 
     // Count time the player has been gazing at the button.
     private float _lookTimer = 0f;
-
     // Links with book logic
-    public Book Book;
-
-    // True means next, false means back
-    public bool NextOrBack;
+    public Book book;
 
     public void SetGazedAt(bool gazedAt)
     {
@@ -36,43 +40,32 @@ public class NextOrBackButton : MonoBehaviour
             if (_lookTimer > TimerDuration)
             {
                 _lookTimer = 0f;
-                if (NextOrBack == true)
+
+                switch(dropdown)
                 {
-                    Book.Next();
-                    Debug.Log("NExt");
-                }
-                else
-                {
-                    Book.Back();
+                	case NextBack.next:
+	                    if (!book.IsTable)
+	                    {
+	                    book.TurnNextPage();
+	                    }
+
+	                    break;
+                    case NextBack.back:
+                      if (!book.IsTable)
+                      {
+                        book.TurnBackPage();
+                      }
+
+                        break;
+                    
                 }
             }
+            
         }
         else
         {
             _lookTimer = 0f;
         }
-    }
-
-    /*
-     * Hides / displays the button according to the view mode.
-     */
-    public void Hide()
-    {
-       
-        foreach (Transform child in transform)
-        {
-            child.gameObject.SetActive(false);
-        }
-      
-    }
-
-    void Start()
-    {
-       
-        foreach (Transform child in transform)
-        {
-            child.gameObject.SetActive(false);
-        }
-
+        
     }
 }
