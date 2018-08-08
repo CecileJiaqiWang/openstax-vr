@@ -1,6 +1,10 @@
-﻿public class ToggleMusic : UnityEngine.MonoBehaviour
+﻿using System;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ToggleMusic : MonoBehaviour
 {
-    [NonSerializedAttribute]
+	[NonSerializedAttribute]
 	public Boolean IsOn;
 
 	[NonSerializedAttribute]
@@ -68,10 +72,37 @@
 					lookTimer = 0f;
 					_isPlaying = !_isPlaying;
 					IsOn = !IsOn;
-					// Change image.
+					if (_isPlaying)
+					{
+
+						AudioSource.clip = music0;
+						AudioSource.Play();
+						if (MusicChoice == "Classical")
+						{
+							transform.parent.parent.parent.parent.GetChild(1).GetChild(0)
+								.GetChild(2).localScale = new Vector3((float) 0.03, (float) 0.03, 1);
+
+						}
+						else if (MusicChoice == "WhiteNoise")
+						{
+							transform.parent.parent.parent.parent.GetChild(1).GetChild(1)
+								.GetChild(2).localScale = new Vector3((float) 0.03, (float) 0.03, 1);
+
+						}
+
+
+					}
+					else
+					{
+						AudioSource.Pause();
+						transform.parent.parent.parent.parent.GetChild(1).GetChild(0).GetChild(2)
+							.localScale = new Vector3(0, 0, 0);
+						transform.parent.parent.parent.parent.GetChild(1).GetChild(1).GetChild(2)
+							.localScale = new Vector3(0, 0, 0);
+					}
+
 					StartImage.sprite = IsOn ? On : Off;
 				}
-
 			}
 			else
 			{
@@ -79,6 +110,5 @@
 
 			}
 		}
-
-	}    
+	}
 }
